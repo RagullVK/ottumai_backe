@@ -23,7 +23,7 @@ db.connect((err) => {
     console.log("Connected")
 })
 
-//Add data
+//Add Event
 app.post('/create', (req, res) =>{
     const community = req.body.community;
     const title = req.body.title;
@@ -48,7 +48,7 @@ app.post('/create', (req, res) =>{
     );
 });
 
-// Get Data
+// Get Events
 app.get('/events', (req, res) => {
     db.query("SELECT * FROM booking", (err, result) => {
         if (err) {
@@ -59,6 +59,18 @@ app.get('/events', (req, res) => {
         }
     })
 })
+
+//Delete Event
+app.delete("/delete/:id", (req, res) => {
+    const id = req.params.id;
+    db.query("DELETE FROM booking WHERE id = ?", id, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+  });
 
 ///////////Tracking
 
